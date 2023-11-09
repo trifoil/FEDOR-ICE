@@ -28,15 +28,16 @@ lol() \
         "$@" \
     fi \
 } \
-
+\
 COMMANDS=( \
     neofetch \
 ) \
-
+\
 for COMMAND in "${COMMANDS[@]}"; do \
     alias "${COMMAND}=lol ${COMMAND}" \
     alias ".${COMMAND}=$(which ${COMMAND})" \
 done' ~/.bashrc
+
 
 exit 0
 
