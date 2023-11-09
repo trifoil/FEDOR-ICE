@@ -1,5 +1,3 @@
-#! /usr/bin/bash
-
 #dnf install blender btop wine krita freecad neofetch 
 
 #sudo rpmkeys --import https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/-/raw/master/pub.gpg
@@ -18,18 +16,30 @@ sudo dnf install -y neofetch lolcat
 
 # Check if neofetch installation was successful
 if [ $? -ne 0 ]; then
-  echo "Neofetch installation failed. Exiting."
-  exit 1
+  echo "Neofetch installation failed !"
 fi
 
-# Add function to ~/.bashrc
-echo -e "\n# Display Neofetch with Lolcat\nneolol() { neofetch | lolcat; }" >> ~/.bashrc
+sed -i '/specific_line/a\
+lol()
+{
+    if [ -t 1 ]; then
+        "$@" | lolcat
+    else
+        "$@"
+    fi
+}
 
-# Inform the user about successful installation and configuration
-echo "Neofetch and Lolcat installed successfully. ~/.bashrc configured."
+COMMANDS=(
+    
+    neofetch
+)
 
-# Source the ~/.bashrc to apply changes immediately
-source ~/.bashrc
+for COMMAND in "${COMMANDS[@]}"; do
+    alias "${COMMAND}=lol ${COMMAND}"
+    alias ".${COMMAND}=$(which ${COMMAND})"
+done
+
+' your_file.txt > ~/.bashrc
 
 exit 0
 
