@@ -20,9 +20,23 @@ if [ $? -ne 0 ]; then
 fi
 
 sed -i '/# Source global definitions/a\
-This is line 1\
-This is line 2\
-This is line 3' ~/.bashrc
+lol() \
+{ \
+    if [ -t 1 ]; then \
+        "$@" | lolcat \
+    else \
+        "$@" \
+    fi \
+} \
+
+COMMANDS=( \
+    neofetch \
+) \
+
+for COMMAND in "${COMMANDS[@]}"; do \
+    alias "${COMMAND}=lol ${COMMAND}" \
+    alias ".${COMMAND}=$(which ${COMMAND})" \
+done' ~/.bashrc
 
 exit 0
 
