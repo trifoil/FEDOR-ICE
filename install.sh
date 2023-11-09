@@ -22,8 +22,8 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-# Add neofetch | lolcat to the end of ~/.bashrc
-echo "neofetch | lolcat" >> ~/.bashrc
+# Add function to ~/.bashrc
+echo -e "\n# Display Neofetch with Lolcat\nneolol() { neofetch | lolcat; }" >> ~/.bashrc
 
 # Inform the user about successful installation and configuration
 echo "Neofetch and Lolcat installed successfully. ~/.bashrc configured."
@@ -32,3 +32,4 @@ echo "Neofetch and Lolcat installed successfully. ~/.bashrc configured."
 source ~/.bashrc
 
 exit 0
+
