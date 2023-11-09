@@ -13,14 +13,8 @@
 
 #!/bin/bash
 
-# Check if the script is run with root privileges
-if [ "$(id -u)" -ne 0 ]; then
-  echo "Please run with sudo or as root."
-  exit 1
-fi
-
 # Install neofetch and lolcat
-dnf install -y neofetch lolcat
+sudo dnf install -y neofetch lolcat
 
 # Check if neofetch installation was successful
 if [ $? -ne 0 ]; then
@@ -28,13 +22,13 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-# Configure bashrc to display neofetch with lolcat
-echo -e "\n# Display Neofetch with Lolcat\nneofetch | lolcat" >> /etc/bashrc
+# Add neofetch | lolcat to the end of ~/.bashrc
+echo "neofetch | lolcat" >> ~/.bashrc
 
 # Inform the user about successful installation and configuration
-echo "Neofetch and Lolcat installed successfully. Bashrc configured."
+echo "Neofetch and Lolcat installed successfully. ~/.bashrc configured."
 
-# Source the bashrc to apply changes immediately
-source /etc/bashrc
+# Source the ~/.bashrc to apply changes immediately
+source ~/.bashrc
 
 exit 0
