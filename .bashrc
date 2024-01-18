@@ -1,26 +1,29 @@
 # .bashrc
 
 # Source global definitions
-COMMANDS=(
-           neofetch
-           )
-
- for COMMAND in "${COMMANDS[@]}"; do
-    alias "${COMMAND}=${COMMAND} | lolcat"
-    alias ".${COMMAND}=$(which ${COMMAND})"
- done
 lol()
- {
-   if [ -t 1 ]; then
-       "$@" | lolcat
-   else
-       "$@"
-   fi
- }
+{
+    if [ -t 1 ]; then
+        "$@" | lolcat
+    else
+        "$@"
+    fi
+}
+
+COMMANDS=(
+    
+    neofetch
+)
+
+for COMMAND in "${COMMANDS[@]}"; do
+    alias "${COMMAND}=lol ${COMMAND}"
+    alias ".${COMMAND}=$(which ${COMMAND})"
+done
 
 if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
 fi
+
 
 # User specific environment
 if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]
@@ -42,4 +45,18 @@ if [ -d ~/.bashrc.d ]; then
 fi
 
 unset rc
-. "$HOME/.cargo/env"
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/usr/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/usr/etc/profile.d/conda.sh" ]; then
+        . "/usr/etc/profile.d/conda.sh"
+    else
+        export PATH="/usr/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
